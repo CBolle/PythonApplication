@@ -7,9 +7,8 @@ class Database():
 
     def __init__(self):
         self.engine = create_engine(Database.DATABASE_URL)
-        self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
-        self.Base = declarative_base()
-
+        self.sessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+        
         try:
         # Try to connect to the database
             with self.engine.connect() as connection:

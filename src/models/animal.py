@@ -1,6 +1,5 @@
 from datetime import datetime
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 from src.models.base import Base
 
@@ -12,7 +11,7 @@ class Animal(Base):
     species_id = Column(Integer, ForeignKey('species.id'))
     
     # Relationship to Species
-    species = relationship('Species', back_populates='animals')
+    species = relationship('src.models.species.Species', back_populates='animal')
 
     __table_args__ = {'extend_existing': True}
 
@@ -22,4 +21,4 @@ class Animal(Base):
     def get_age(self):
         return ((datetime.today() - self.date_of_birth))/365.25
 
-
+    

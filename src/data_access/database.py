@@ -32,3 +32,7 @@ class Database():
             module_name = module_info.name
             if module_name != 'base':
                 importlib.import_module(f'models.{module_name}')
+
+
+if __name__ != '__main__':
+    database = Database()

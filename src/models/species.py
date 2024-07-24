@@ -9,6 +9,7 @@ class Species(Base):
     name = Column(String(50))
     life_span = Column(Integer)
 
-    animals = relationship('src.models.animal.Animal', back_populates='species')
+    animals = relationship('Animal', back_populates='species')
 
     __table_args__ = {'extend_existing': True}
+    

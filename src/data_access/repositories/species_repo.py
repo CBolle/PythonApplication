@@ -1,4 +1,3 @@
-# from src.data_access.database import Database
 from src.models.species import Species
 
 class SpeciesRepository:

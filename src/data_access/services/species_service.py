@@ -1,12 +1,12 @@
-# from src.models.species import Species
-from src.data_access.repositories.species_repo import SpeciesRepository, Species
+from src.data_access.repositories.species_repo import SpeciesRepository
+from src.models.species import Species
 from src.data_access.database import database
 from sqlalchemy.inspection import inspect
-from sqlalchemy.types import String, Integer, Date
+from sqlalchemy.types import String, Integer
 
 class Species_Service:
     def __init__(self):
-        self.speciesRepo = SpeciesRepository(database.db())
+        self.speciesRepo = SpeciesRepository(database.get_session())
         self.keylist = [[column.name,column.type] for column in inspect(Species).c]
 
     def add(self, **kwargs):

@@ -1,6 +1,3 @@
-from src.data_access.services.animal_service import Animal_Service
-from src.data_access.services.species_service import Species_Service
-
 class View():
     def __init__(self):
         pass

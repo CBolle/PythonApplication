@@ -11,7 +11,7 @@ class Animal(Base):
     species_id = Column(Integer, ForeignKey('species.id'))
     
     # Relationship to Species
-    species = relationship('src.models.species.Species', back_populates='animal')
+    species = relationship('Species', back_populates='animal')
 
     __table_args__ = {'extend_existing': True}
     

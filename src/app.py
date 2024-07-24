@@ -1,6 +1,6 @@
 from src.views.view import View
-from src.data_access.services.animal_service import *
-from src.data_access.services.species_service import *
+from src.data_access.services.animal_service import Animal_Service
+from src.data_access.services.species_service import Species_Service
 
 class App():
     view = View()

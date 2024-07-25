@@ -3,16 +3,12 @@ from sqlalchemy.orm import relationship
 from src.models.base import Base
 from src.models.landscape import Landscape
 
-class Species(Base):
-    __tablename__ = 'species'
+class Exhibit(Base):
+    __tablename__ = 'exhibit'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    latin_name = Column(String(100))
-    adult_food_daily = Column(Float)
-    adult_after = Column(Float)
+    area = Column(Float)
     landscape = Column(Enum(Landscape), nullable=False)
-    exhibit_id = Column(Integer, ForeignKey('exhibit.id'))
 
-    animal = relationship('Animal', back_populates='species')
-    exhibit = relationship('Exhibit', back_populates='species')
+    species = relationship('Species', back_populates='exhibit')
 
     __table_args__ = {'extend_existing': True}

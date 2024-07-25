@@ -1,4 +1,5 @@
 from src.models.species import Species
+import json
 
 class SpeciesRepository:
     def __init__(self, db_session):
@@ -8,10 +9,10 @@ class SpeciesRepository:
         new_species = Species(**args)
         self.db_session.add(new_species)
         self.db_session.commit()
+        field_dict = {**args}
         print('A species was added to the database with the following fields:')
-        for (attribute, value) in new_species.__dict__.items():
-            print(f'{attribute}: {value}')
+        print(json.dumps(field_dict, indent = 4))
         return new_species
     
-    def delete_sepcies(self, **args):
+    def delete_species(self, **args):
         pass

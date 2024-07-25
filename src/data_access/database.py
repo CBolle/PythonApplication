@@ -6,6 +6,8 @@ import pkgutil
 from src.models.base import Base
 from src.models.animal import Animal
 from src.models.species import Species
+from src.models.exhibit import Exhibit
+from src.models.landscape import Landscape
 
 class Database:
     DATABASE_URL = "mysql+pymysql://root:@localhost/zoo"
@@ -28,7 +30,8 @@ class Database:
 
     def import_models(self):
         models_path = os.path.join(os.path.dirname(__file__), 'models')
-        print(models_path)
+        print(f"dit is het pad {models_path}") ####
+        print(pkgutil.iter_modules([models_path]))
  
         for _, module_name, _ in pkgutil.iter_modules([models_path]):
             print(f"Found module: {module_name}")  # Print each detected module name
@@ -49,5 +52,4 @@ class Database:
 database = Database()
 
 if __name__ == "__main__":
-    database = Database()
     database.get_imported_modules()

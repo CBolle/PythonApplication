@@ -12,3 +12,6 @@ class SpeciesRepository:
         for (attribute, value) in new_species.__dict__.items():
             print(f'{attribute}: {value}')
         return new_species
+    
+    def delete_sepcies(self, **args):
+        pass

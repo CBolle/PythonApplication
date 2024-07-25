@@ -17,6 +17,9 @@ class Species_Service:
         for i in range(len(self.keylist)):
             keyname = self.keylist[i][0]
             keytype = self.keylist[i][1]
+            if keyname == "id":
+                continue
+            
             self.keys.append(keyname)
             if isinstance(keytype, String):
                 self.inputs.append(input(f'{self.keys[i]}: '))
@@ -26,3 +29,7 @@ class Species_Service:
             self.args[self.keys[i]] = self.inputs[i]
         
         self.speciesRepo.add_species(**self.args)
+
+    def delete(self, **kwargs):
+        name = input("Which species would you like to delete?: ")
+        self.speciesRepo.delete_species(**self.args)

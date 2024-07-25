@@ -5,7 +5,7 @@ from src.models.base import Base
 
 class Animal(Base):
     __tablename__ = 'animals'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50))
     date_of_birth = Column(Date)
     species_id = Column(Integer, ForeignKey('species.id'))

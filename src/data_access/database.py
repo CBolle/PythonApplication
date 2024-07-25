@@ -11,11 +11,12 @@ class Database:
     DATABASE_URL = "mysql+pymysql://root:@localhost/zoo"
 
     def __init__(self):
+        self.import_models()
         self.engine = create_engine(Database.DATABASE_URL)
         self.test_connection()
-        # self.import_models()
         Base.metadata.create_all(self.engine)
-        self.db = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+        self.Session = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+        self.db = self.Session()
         self.imported_modules = []  # List to store imported module names
 
     def test_connection(self):

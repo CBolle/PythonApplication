@@ -14,7 +14,8 @@ class View():
         print("2. Animal")
         print("3. Feeding")
         print("4. Zookeeper")
-        print("5. Exit the program")
+        print("5. Exhibit")
+        print("6. Exit the program")
 
     def display_sub_menu(self, menu_type):
         print("\n")
@@ -26,6 +27,8 @@ class View():
             print("Zookeeper")
         elif menu_type == "feeding":
             print("Feeding")
+        elif menu_type == "exhibit":
+            print("Exhibit")
         else:
             print("Unknown Menu Type")
             return

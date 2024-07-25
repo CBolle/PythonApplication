@@ -5,7 +5,7 @@ class SpeciesRepository:
     def __init__(self, db_session):
         self.db_session = db_session
 
-    def add_species(self, **args):
+    def add(self, **args):
         new_species = Species(**args)
         self.db_session.add(new_species)
         self.db_session.commit()
@@ -14,5 +14,5 @@ class SpeciesRepository:
         print(json.dumps(field_dict, indent = 4))
         return new_species
     
-    def delete_species(self, **args):
+    def delete(self, **args):
         pass

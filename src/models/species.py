@@ -4,6 +4,7 @@ from src.models.base import Base
 from src.models.landscape import Landscape
 
 class Species(Base):
+    options = []
     __tablename__ = 'species'
     id = Column(Integer, primary_key=True, autoincrement=True)
     latin_name = Column(String(100))

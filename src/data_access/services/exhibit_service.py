@@ -1,13 +1,16 @@
-from src.data_access.repositories.species_repo import SpeciesRepository
-from src.models.species import Species
+from src.data_access.repositories.exhibit_repo import ExhibitRepository
+from sqlalchemy import String
+from src.models.exhibit import Exhibit
+from src.models.landscape import Landscape
 from src.data_access.database import database
 from src.data_access.dictionaries import typedict
 from sqlalchemy.inspection import inspect
 
-class Species_Service:
+class Exhibit_Service:
     def __init__(self):
-        self.repo = SpeciesRepository(database.get_session())
-        self.keylist = [[column.name,column.type] for column in inspect(Species).c]
+        self.repo = ExhibitRepository(database.get_session())
+        self.keylist = [[column.name,column.type] for column in inspect(Exhibit).c]
+
 
     def add(self):
         self.args = {}
@@ -18,7 +21,7 @@ class Species_Service:
 
             keyname = self.keylist[i][0]
             keytype = self.keylist[i][1]
-
+                
             for type in typedict().keys(): ##Add types to dictionairies.py if your type is not found
                 if isinstance(keytype, type):
                     self.input = typedict()[type](input(f'{keyname}: '))
@@ -29,4 +32,4 @@ class Species_Service:
 
     def delete(self, **kwargs):
         name = input("Which species would you like to delete?: ")
-        self.repo.delete(**self.args)
+        self.repo.delete_species(**self.args)

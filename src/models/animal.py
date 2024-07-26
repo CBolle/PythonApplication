@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship, sessionmaker
 from src.models.base import Base
 
 class Animal(Base):
-    __tablename__ = 'animals'
+    __tablename__ = 'animal'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50))
     date_of_birth = Column(Date)

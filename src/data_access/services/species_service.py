@@ -1,35 +1,32 @@
 from src.data_access.repositories.species_repo import SpeciesRepository
 from src.models.species import Species
 from src.data_access.database import database
+from src.data_access.dictionaries import typedict
 from sqlalchemy.inspection import inspect
-from sqlalchemy.types import String, Integer
 
 class Species_Service:
     def __init__(self):
-        self.speciesRepo = SpeciesRepository(database.get_session())
+        self.repo = SpeciesRepository(database.get_session())
         self.keylist = [[column.name,column.type] for column in inspect(Species).c]
 
-    def add(self, **kwargs):
-        self.inputs = []
-        self.keys = []
+    def add(self):
         self.args = {}
-        
+
         for i in range(len(self.keylist)):
+            if self.keylist[i][0] == "id": ##Add any other things if they should be auto-incremeneted
+                continue
+
             keyname = self.keylist[i][0]
             keytype = self.keylist[i][1]
-            if keyname == "id":
-                continue
-            
-            self.keys.append(keyname)
-            if isinstance(keytype, String):
-                self.inputs.append(input(f'{self.keys[i]}: '))
-            elif isinstance(keytype, Integer):
-                self.inputs.append(int(input(f'{self.keys[i]}: ')))
-            # zet hier later meer types neer
-            self.args[self.keys[i]] = self.inputs[i]
+
+            for type in typedict().keys(): ##Add types to dictionairies.py if your type is not found
+                if isinstance(keytype, type):
+                    self.input = typedict()[type](input(f'{keyname}: '))
+                    
+            self.args[keyname] = self.input
         
-        self.speciesRepo.add_species(**self.args)
+        self.repo.add(**self.args)
 
     def delete(self, **kwargs):
         name = input("Which species would you like to delete?: ")
-        self.speciesRepo.delete_species(**self.args)
+        self.repo.delete(**self.args)

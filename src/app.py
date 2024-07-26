@@ -2,6 +2,7 @@ from src.views.view import View
 from src.data_access.services.animal_service import Animal_Service
 from src.data_access.services.species_service import Species_Service
 from src.data_access.services.exhibit_service import Exhibit_Service
+from src.data_access.database import database
 
 class App():
     view = View()
@@ -14,6 +15,7 @@ class App():
             if main_choice in choices:
                 self.run_submenu(choices[main_choice])
             elif main_choice == 6:
+                database.close_session()
                 print("Exiting the programm ...")
                 break
             else:
@@ -40,8 +42,7 @@ class App():
                 # service.edit()
                 pass
             elif choice == '4':
-                # service.viewall()
-                pass
+                service.get_all()
             elif choice == '5':
                 # Go Back to the main menu
                 break

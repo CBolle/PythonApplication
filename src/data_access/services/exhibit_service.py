@@ -1,5 +1,4 @@
 from src.data_access.repositories.exhibit_repo import ExhibitRepository
-from sqlalchemy import String
 from src.models.exhibit import Exhibit
 from src.models.landscape import Landscape
 from src.data_access.database import database
@@ -11,8 +10,12 @@ class Exhibit_Service:
         self.repo = ExhibitRepository(database.get_session())
         self.keylist = [[column.name,column.type] for column in inspect(Exhibit).c]
 
-    def get_species(self):
-        
+    def get_all(self):
+        all = self.repo.get_all()
+        print("Exhibits:")
+        for item in all:
+            print(item)
+
 
     def add(self):
         self.args = {}
@@ -43,8 +46,13 @@ class Exhibit_Service:
                         self.input = typedict()[type_i](input(f'{keyname}: '))
                     
             self.args[keyname] = self.input
-        
-        self.repo.add(**self.args)
+        exhibit = Exhibit(**self.args)
+        try:
+            self.repo.add(exhibit)
+            print(f'The following exhibit was added to the database: {exhibit}')
+        except:
+            print("Something went wrong when you wanted to add the exhibit to the database")
+
 
     def delete(self, **kwargs):
         name = input("Which species would you like to delete?: ")

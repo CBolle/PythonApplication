@@ -15,23 +15,22 @@ class Database:
     def __init__(self):
         self.engine = create_engine(Database.DATABASE_URL)
         self.test_connection()
-        Base.metadata.create_all(self.engine)
-        self.Session = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
-        self.db = self.Session()
-        self.imported_modules = []  # List to store imported module names
 
     def test_connection(self):
         try:
             with self.engine.connect() as connection:
                 print("Database connection successful!")
+                Base.metadata.create_all(self.engine)
+                self.Session = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
+                self.db = self.Session()
         except Exception as e:
             print(f"Database connection failed: {e}")
                     
     def get_session(self):
         return self.db
 
-    def get_imported_modules(self):
-        return ', '.join(self.imported_modules)  # Return the list of module names as a string
+    def close_session(self):
+        self.db.close()
 
 database = Database()
 

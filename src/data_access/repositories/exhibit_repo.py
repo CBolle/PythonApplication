@@ -9,13 +9,13 @@ class ExhibitRepository:
         self.db_session.add(exhibit)
         self.db_session.commit()
 
-    def get_all(self):
+    def getAll(self):
         return self.db_session.query(Exhibit).all()
 
-    def getbyid(self, id):
+    def getById(self, id):
         return self.db_session.get(Exhibit, id)
     
-    def updatebyid(self, args, exhibit):
+    def updateById(self, args, exhibit):
         for key, value in args.items():
             if hasattr(exhibit, key):
                 setattr(exhibit, key, value)

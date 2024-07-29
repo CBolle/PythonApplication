@@ -1,4 +1,4 @@
-from src.data_access.repositories.species_repo import AnimalRepository
+from src.data_access.repositories.animal_repo import AnimalRepository
 from src.models.animal import Animal
 from src.models.landscape import Landscape
 from src.data_access.database import database
@@ -11,11 +11,11 @@ class AnimalService(Service):
         super().__init__()
         self.repo = AnimalRepository(database.get_session())
 
-    def get_all_active(self):
-        all_animals = self.repo.get_all_active()
+    def getAllActive(self):
+        all_animals = self.repo.getAllActive()
         print("Species currently in your zoo:")
         for animal in all_animals:
-            print(json.dumps(animal.to_dict()))
+            print(json.dumps(animal.toDict()))
 
 
     def add(self):
@@ -27,7 +27,7 @@ class AnimalService(Service):
         except:
             print("Something went wrong when you wanted to add the animal to the database.")
 
-    def update_species(self):
+    def updateById(self):
         species = input("Which animal would you like to update? Please choose from the list below.")
         print(self.repo.get_all_active())
         self.getupdatedict(Animal)

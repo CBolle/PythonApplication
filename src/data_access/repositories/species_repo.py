@@ -9,13 +9,13 @@ class SpeciesRepository:
         self.db_session.add(species)
         self.db_session.commit()
     
-    def get_all(self):
+    def getAll(self):
         return self.db_session.query(Species).all()
     
-    def get_all_active(self):
+    def getAllActive(self):
         return self.db_session.query(Species).filter_by(active=True)
     
-    def get_by_id(self, species_id):
+    def getById(self, species_id):
         return self.db_session.get(Species, species_id)
     
     def update(self, species_id, **kwargs):

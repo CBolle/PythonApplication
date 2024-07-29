@@ -4,23 +4,23 @@ from src.models.exhibit import Exhibit
 from src.data_access.database import database
 from src.data_access.services.service import Service
 
-class Exhibit_Service(Service):
+class ExhibitService(Service):
     def __init__(self):
         super().__init__()
         self.repo = ExhibitRepository(database.get_session())
 
-    def get_all(self):
+    def getAll(self):
         all = self.repo.get_all()
         print("Exhibits:")
         for item in all:
             print(item)
         return all
 
-    def getbyid(self, id):
+    def getById(self, id):
         return self.repo.getbyid(id)
 
     def add(self):
-        args = self.getinputdict(Exhibit)
+        args = self.getInputdict(Exhibit)
         exhibit = Exhibit(**args)
         try:
             self.repo.add(exhibit)
@@ -28,12 +28,12 @@ class Exhibit_Service(Service):
         except:
             print("Something went wrong when you wanted to add the exhibit to the database")
 
-    def updatebyid(self):
+    def updateById(self):
         args, id = self.getupdatedict(Exhibit)
         exhibit = self.repo.getbyid(id)
-        self.repo.updatebyid(args, exhibit)
+        self.repo.updateById(args, exhibit)
 
 
     def delete(self, **kwargs):
         name = input("Which species would you like to delete?: ")
-        self.repo.delete_species(**self.args)
+        self.repo.delete(**self.args)

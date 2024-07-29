@@ -14,7 +14,7 @@ class Exhibit(Base):
 
     __table_args__ = {'extend_existing': True}
 
-    def to_dict(self):
+    def toDict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
     
     def __str__(self):

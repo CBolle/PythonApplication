@@ -16,7 +16,7 @@ class Animal(Base):
 
     __table_args__ = {'extend_existing': True}
     
-    def get_age(self):
+    def getAge(self):
         return ((datetime.today() - self.date_of_birth))/365.25
 
     

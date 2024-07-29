@@ -9,15 +9,15 @@ class Service():
     def __init__(self):
         self.types = [String, Integer, Float, Enum, Date, Boolean]
         self.pythontypes = [str, int, float, str, date, bool]
-        self.typedict = self.filltypedict()
+        self.typedict = self.fillTypedict()
 
-    def filltypedict(self):
+    def fillTypedict(self):
         typedict = {}
         for i in range(len(self.types)):
             typedict[self.types[i]] = self.pythontypes[i]
         return typedict
 
-    def getinputdict(self, Class):
+    def getInputdict(self, Class):
         args = {}
         keylist = [[column.name,column.type] for column in inspect(Class).c]
         for i in range(len(keylist)):
@@ -48,7 +48,7 @@ class Service():
             args[keyname] = inputval
         return args
     
-    def getupdatedict(self, Class):
+    def getUpdatedict(self, Class):
         args = {}
         keylist = {column.name: column.type for column in inspect(Class).c}
         id = int(input("Which id do you want to update?: "))

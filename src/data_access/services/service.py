@@ -10,9 +10,9 @@ class Service():
         self.types = [String, Integer, Float, Enum, Date, Boolean]
         self.pythontypes = [str, int, float, str, date, bool]
         self.typedict = {}
-        self.filltypedict()
+        self.filetypedict()
 
-    def filltypedict(self):
+    def filetypedict(self):
         for i in range(len(self.types)):
             self.typedict[self.types[i]] = self.pythontypes[i]
         return self.typedict

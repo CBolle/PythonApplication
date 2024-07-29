@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Enum as SqlEnum, Float, inspect
+from sqlalchemy import Column, Integer, Enum as SqlEnum, Float, inspect, Boolean
 from sqlalchemy.orm import relationship
 from src.models.base import Base
 from src.models.landscape import Landscape
@@ -8,6 +8,7 @@ class Exhibit(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     area = Column(Float)
     landscape = Column(SqlEnum(Landscape), nullable=False)
+    active = Column(Boolean, default=True)
 
     species = relationship('Species', back_populates='exhibit')
 

@@ -12,6 +12,12 @@ class ExhibitRepository:
     def get_all(self):
         return self.db_session.query(Exhibit).all()
 
+    def getbyid(self, id):
+        return self.db_session.get(Exhibit, id)
+    
+    def updatebyid(self):
+        self.db_session.commit()
+
 
     def delete(self, **args):
         pass

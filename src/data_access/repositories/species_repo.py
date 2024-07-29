@@ -19,7 +19,7 @@ class SpeciesRepository:
         return self.db_session.get(Species, species_id)
     
     def update(self, species_id, **kwargs):
-        species = SpeciesRepository.get_by_id(species_id)
+        species = self.get_by_id(species_id)
         for key, value in kwargs.items():
             if hasattr(species, key):
                 setattr(species, key, value)

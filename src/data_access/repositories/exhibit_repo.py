@@ -15,7 +15,12 @@ class ExhibitRepository:
     def getbyid(self, id):
         return self.db_session.get(Exhibit, id)
     
-    def updatebyid(self):
+    def updatebyid(self, args, exhibit):
+        for key, value in args.items():
+            if hasattr(exhibit, key):
+                setattr(exhibit, key, value)
+            else:
+                print(f'Exhibit does not have a field {key}.')
         self.db_session.commit()
 
 

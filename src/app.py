@@ -39,7 +39,7 @@ class App():
                 # service.delete()
                 pass
             elif choice == '3':
-                # service.edit()
+                service.updatebyid()
                 pass
             elif choice == '4':
                 service.get_all()

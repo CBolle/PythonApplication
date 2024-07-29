@@ -20,19 +20,19 @@ class Exhibit_Service(Service):
         return self.repo.getbyid(id)
 
     def add(self):
-        self.args = self.getinputdict(Exhibit)
-        exhibit = Exhibit(**self.args)
+        args = self.getinputdict(Exhibit)
+        exhibit = Exhibit(**args)
         try:
             self.repo.add(exhibit)
             print(f'The following exhibit was added to the database: {exhibit}')
         except:
             print("Something went wrong when you wanted to add the exhibit to the database")
 
-    def updatebyid(self, id):
-        pass
-        # exhibit = self.getbyid(id)
-        # field = input()
-        # exhibit.[field] = input(f"wat moet {field} worden")
+    def updatebyid(self):
+        args, id = self.getupdatedict(Exhibit)
+        exhibit = self.repo.getbyid(id)
+        self.repo.updatebyid(args, exhibit)
+
 
     def delete(self, **kwargs):
         name = input("Which species would you like to delete?: ")

@@ -17,7 +17,6 @@ class Species_Service(Service):
         for species in all_species:
             print(json.dumps(species.to_dict()))
 
-
     def add(self):
         self.args = self.getinputdict(Species)
         species = Species(**self.args)
@@ -31,7 +30,6 @@ class Species_Service(Service):
         species = input("Which species would you like to update? Please choose from the list below.")
         print(self.repo.get_all_active())
         self.getupdatedict(Species)
-
 
     def delete(self):
         name = input("Which species would you like to delete? Please choose from the list below.")

@@ -29,8 +29,8 @@ class ExhibitService(Service):
             print("Something went wrong when you wanted to add the exhibit to the database")
 
     def updateById(self):
-        args, id = self.getupdatedict(Exhibit)
-        exhibit = self.repo.getbyid(id)
+        args, id = self.getUpdatedict(Exhibit)
+        exhibit = self.repo.getById(id)
         self.repo.updateById(args, exhibit)
 
 

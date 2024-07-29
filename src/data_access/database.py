@@ -1,8 +1,5 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import importlib
-import os
-import pkgutil
 from src.models.base import Base
 from src.models.animal import Animal
 from src.models.species import Species

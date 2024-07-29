@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date, Boolean
 from sqlalchemy.orm import relationship, sessionmaker
 from src.models.base import Base
 
@@ -9,6 +9,7 @@ class Animal(Base):
     name = Column(String(50))
     date_of_birth = Column(Date)
     species_id = Column(Integer, ForeignKey('species.id'))
+    active = Column(Boolean, default=True)
     
     # Relationship to Species
     species = relationship('Species', back_populates='animal')

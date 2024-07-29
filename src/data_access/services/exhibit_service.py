@@ -2,11 +2,11 @@ from src.data_access.repositories.exhibit_repo import ExhibitRepository
 from src.models.exhibit import Exhibit
 
 from src.data_access.database import database
-from src.data_access.dictionaries import getinputdict
-from sqlalchemy.inspection import inspect
+from src.data_access.services.service import Service
 
-class Exhibit_Service:
+class Exhibit_Service(Service):
     def __init__(self):
+        super().__init__()
         self.repo = ExhibitRepository(database.get_session())
 
     def get_all(self):
@@ -20,7 +20,7 @@ class Exhibit_Service:
         return self.repo.getbyid(id)
 
     def add(self):
-        self.args = getinputdict(Exhibit)
+        self.args = self.getinputdict(Exhibit)
         exhibit = Exhibit(**self.args)
         try:
             self.repo.add(exhibit)

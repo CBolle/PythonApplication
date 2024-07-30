@@ -56,7 +56,7 @@ class Service():
         while True:
             # Display available fields to update, excluding 'id' and 'active'
             print("Available fields to update:")
-            available_fields = [keyname for keyname in keylist if keyname not in ["id", "active"]]
+            available_fields = [keyname for keyname in keylist if keyname not in ["id"]]
             if not available_fields:
                 print("No fields available to update.")
                 break
@@ -67,7 +67,7 @@ class Service():
             if keyname == 'done':
                 break
             
-            if keyname not in keylist or keyname in ["id", "active"]:
+            if keyname not in keylist or keyname in ["id"]:
                 print("Invalid field name or field cannot be updated. Please try again.")
                 continue
             
@@ -86,8 +86,24 @@ class Service():
                 else:
                     print(f"Unsupported Enum type for field {keyname}.")
                     continue
+            elif type(keytype).__name__ == "Boolean":
+                inputval = self.get_boolean_from_input()
             else:
                 inputval = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
 
             args[keyname] = inputval
         return args, id
+
+    def get_boolean_from_input(self):
+        """
+        Prompts the user to input 1 or 0 to set the boolean value. Converts 1 to True and 0 to False.
+        """
+        while True:
+            user_input = input("Should this item be active (yes=1/no=0): ")
+            
+            if user_input == '1':
+                return True
+            elif user_input == '0':
+                return False
+            else:
+                print("Invalid input. Please enter 1 for yes or 0 for no.")

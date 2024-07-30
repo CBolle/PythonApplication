@@ -18,4 +18,4 @@ class Exhibit(Base):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
     
     def __str__(self):
-        return f"Exhibit(id={self.id}, area={self.area}, landscape={self.landscape})"
+        return f"Exhibit(id={self.id}, area={self.area}, landscape={self.landscape}, Active={self.active})"

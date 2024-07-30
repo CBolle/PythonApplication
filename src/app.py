@@ -36,13 +36,13 @@ class App():
             if choice == '1':
                 service.add()
             elif choice == '2':
-                # service.delete()
+                service.deleteById()
                 pass
             elif choice == '3':
                 service.updateById()
                 pass
             elif choice == '4':
-                service.get_all()
+                service.getAllActive()
             elif choice == '5':
                 # Go Back to the main menu
                 break

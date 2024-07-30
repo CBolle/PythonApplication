@@ -8,43 +8,60 @@ class App():
     view = View()
     def __init__(self):
         while True:
-            self.view.display_main_menu()
+            self.view.displayMainMenu()
             main_choice = int(input("Which menu would you like to visit?: "))
-            choices = {1: "species", 2: "animal", 3: "feeding", 4: "zookeeper", 5: "exhibit"}
 
-            if main_choice in choices:
-                self.run_submenu(choices[main_choice])
-            elif main_choice == 6:
+            if main_choice == 1:
+                self.runOverviewMenu()
+            elif main_choice == 2:
+                self.runCrudMenus()
+            elif main_choice == 3:
                 database.close_session()
                 print("Exiting the programm ...")
                 break
             else:
                 print("Invalid choice, please try again.")
+         
+    def runOverviewMenu(self):
+        pass        
 
-    def run_submenu(self, menu_type):
+    def runCrudMenus(self):
         while True:
-            self.view.display_sub_menu(menu_type)
-            services = {"animal": AnimalService(), "species": SpeciesService(), "exhibit": ExhibitService()}
+            self.view.displayCrudMenus()
+            crud_choice = int(input("Which CRUD menu would you like to visit?: "))
+            crud_choices = {1: "species", 2: "animal", 3: "zookeeper", 4: "exhibit", 5: "food"}
            
-            try:
-                service = services[menu_type]
-            except:
-                print("This service is not yet available.")
-            
-            choice = input("What action would you like to perform?: ")
-
-            if choice == '1':
-                service.add()
-            elif choice == '2':
-                service.deleteById()
-                pass
-            elif choice == '3':
-                service.updateById()
-                pass
-            elif choice == '4':
-                service.getAllActive()
-            elif choice == '5':
-                # Go Back to the main menu
+            if crud_choice in crud_choices:
+                self.runCrudMenu(crud_choices[crud_choice])
+            elif crud_choice == 6:
                 break
             else:
-                print("Invalid choice, please try again 2.")
+                print("Invalid choice, please try again.")
+
+    def runCrudMenu(self, menu_type):
+        while True:
+            services = {"animal": AnimalService(), "species": SpeciesService(), "exhibit": ExhibitService()}
+            try:
+                service = services[menu_type] 
+                self.view.displayCrudMenu(menu_type)  
+                choice = input("What action would you like to perform?: ")
+            except:
+                print("This service is not yet available.")
+                break
+            else:
+                if choice == '1':
+                    service.add()
+                elif choice == '2':
+                    service.deleteById()
+                elif choice == '3':
+                    service.updateById()
+                elif choice == '4':
+                    service.getAllActive()
+                elif choice == '5':
+                    break
+                else:
+                    print("Invalid choice, please try again.")
+            
+           
+
+            

@@ -107,3 +107,6 @@ class Service():
                 return False
             else:
                 print("Invalid input. Please enter 1 for yes or 0 for no.")
+
+    def verify_number(self):
+        pass

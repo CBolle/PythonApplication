@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date, Boolean
+from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date, Boolean, inspect
 from sqlalchemy.orm import relationship, sessionmaker
 from src.models.base import Base
 
@@ -19,4 +19,5 @@ class Animal(Base):
     def getAge(self):
         return ((datetime.today() - self.date_of_birth))/365.25
 
-    
+    def toDict(self):
+        return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}

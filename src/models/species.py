@@ -7,6 +7,7 @@ class Species(Base):
     options = []
     __tablename__ = 'species'
     id = Column(Integer, primary_key=True, autoincrement=True)
+    normal_name = Column(String(50))
     latin_name = Column(String(100))
     adult_food_daily = Column(Float)
     adult_after = Column(Float)
@@ -16,11 +17,9 @@ class Species(Base):
 
     animal = relationship('Animal', back_populates='species')
     exhibit = relationship('Exhibit', back_populates='species')
+    foodSpecies = relationship('FoodSpecies', back_populates='species')
 
     __table_args__ = {'extend_existing': True}
 
     def toDict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
-
-    # def __str__(self):
-    #     return f'''Species(id={self.id}, latin name={self.latin_name}, adult_food_daily={self.adult_food_daily}, landscape={self.landscape})'''

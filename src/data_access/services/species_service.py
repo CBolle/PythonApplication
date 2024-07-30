@@ -15,8 +15,8 @@ class SpeciesService(Service):
         all_species = self.repo.getAllActive()
         print("Species currently in your zoo:")
         for species in all_species:
-            print(json.dumps(species.toDict()))
-            # print(species.toDict())
+            # print(json.dumps(species.toDict()))
+            print(species.toDict())
 
     def add(self):
         self.args = self.getInputdict(Species)
@@ -28,8 +28,8 @@ class SpeciesService(Service):
             print("Something went wrong when you wanted to add the species to the database.")
 
     def updateById(self):
-        print("Which species would you like to update? Please choose from the list below.")
-        print(self.repo.getAllActive())
+        print("Please choose from the list below.")
+        print(self.getAllActive())
         args, id = self.getUpdatedict(Species)
         self.repo.updateById(args, id)
 

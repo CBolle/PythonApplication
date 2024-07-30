@@ -31,7 +31,7 @@ class View:
         elif menuType == "exhibit":
             print("Exhibit")
         elif menuType == "food":
-            print("food")
+            print("Food")
         else:
             print("Unknown Menu Type")
             return

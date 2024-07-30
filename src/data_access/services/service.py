@@ -3,6 +3,7 @@ from sqlalchemy.inspection import inspect
 from datetime import date, datetime
 from enum import Enum
 from src.models.landscape import Landscape
+from src.models.food_type import FoodType
 
 
 class Service():
@@ -37,6 +38,17 @@ class Service():
                             while True:
                                 testinput = self.typedict[type_i](input(f'{keyname}: ')).upper()
                                 if testinput in Landscape.__members__:
+                                    inputval = testinput
+                                    break
+                                else:
+                                    print("Invalid choice, try again.")
+                        if keyname == 'food_type':
+                            print('Which food type will your exhibit have? Choose from:')
+                            for name in FoodType.__members__:
+                                print(name)
+                            while True:
+                                testinput = self.typedict[type_i](input(f'{keyname}: ')).upper()
+                                if testinput in FoodType.__members__:
                                     inputval = testinput
                                     break
                                 else:

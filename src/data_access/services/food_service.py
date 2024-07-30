@@ -23,9 +23,9 @@ class FoodService(Service):
         food = Food(**self.args)
         try:
             self.repo.add(food)
-            print(f'The following food was added to the database:\n{json.dumps(self.args, indent = 4)}')
-        except:
-            print("Something went wrong when you wanted to add the food to the database.")
+            print(f'The following food was added to the database:\n{food.toDict()}')
+        except Exception as e:
+            print(f"Something went wrong when you wanted to add the food to the database: {e}")
 
     def updateById(self):
         print("Please choose from the list below.")

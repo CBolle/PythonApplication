@@ -17,7 +17,7 @@ class Species(Base):
 
     animal = relationship('Animal', back_populates='species')
     exhibit = relationship('Exhibit', back_populates='species')
-    foodSpecies = relationship('FoodSpecies', back_populates='species')
+    # foodSpecies = relationship('FoodSpecies', back_populates='species')
 
     __table_args__ = {'extend_existing': True}
 

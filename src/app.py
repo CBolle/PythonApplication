@@ -42,7 +42,7 @@ class App():
                 service.updateById()
                 pass
             elif choice == '4':
-                service.getAll()
+                service.getAllActive()
             elif choice == '5':
                 # Go Back to the main menu
                 break

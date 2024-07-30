@@ -11,11 +11,15 @@ class ExhibitRepository:
 
     def getAll(self):
         return self.db_session.query(Exhibit).all()
+    
+    def getAllActive(self):
+        return self.db_session.query(Exhibit).filter_by(active=True)
 
     def getById(self, id):
         return self.db_session.get(Exhibit, id)
     
-    def updateById(self, args, exhibit):
+    def updateById(self, args, id):
+        exhibit = self.getById(id)
         for key, value in args.items():
             if hasattr(exhibit, key):
                 setattr(exhibit, key, value)
@@ -24,5 +28,6 @@ class ExhibitRepository:
         self.db_session.commit()
 
 
-    def delete(self, **args):
-        pass
+    def deleteById(self, id):
+        self.getById(id).active = False
+        self.db_session.commit()

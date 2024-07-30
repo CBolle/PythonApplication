@@ -10,11 +10,19 @@ class ExhibitService(Service):
         self.repo = ExhibitRepository(database.get_session())
 
     def getAll(self):
-        all = self.repo.get_all()
+        self.all = self.repo.getAll()
         print("Exhibits:")
-        for item in all:
+        for item in self.all:
             print(item)
-        return all
+        return self.all
+    
+    def getAllActive(self):
+        self.allActive = self.repo.getAllActive()
+        print("Active Exhibits:")
+        for item in self.allActive:
+            print(item)
+        return self.allActive
+    
 
     def getById(self, id):
         return self.repo.getbyid(id)
@@ -29,11 +37,12 @@ class ExhibitService(Service):
             print("Something went wrong when you wanted to add the exhibit to the database")
 
     def updateById(self):
+        self.getAll()
         args, id = self.getUpdatedict(Exhibit)
-        exhibit = self.repo.getById(id)
-        self.repo.updateById(args, exhibit)
+        self.repo.updateById(args, id)
 
 
-    def delete(self, **kwargs):
-        name = input("Which species would you like to delete?: ")
-        self.repo.delete(**self.args)
+    def deleteById(self):
+        self.getAllActive()    
+        id = input("Which item would you like to delete (id): ")
+        self.repo.deleteById(id)

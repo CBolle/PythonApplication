@@ -35,6 +35,6 @@ class SpeciesService(Service):
 
     def deleteById(self):
         print("Please choose from the list below.")
-        print(self.getAllActive())
+        self.getAllActive()
         species_id = int(input('I choose to delete the species with id: '))
         self.repo.deleteById(species_id)

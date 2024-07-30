@@ -50,7 +50,7 @@ class Service():
                                 else:
                                     print("Invalid choice, try again.")
                         if keyname == 'food_type':
-                            print('Which food type will your exhibit have? Choose from:')
+                            print('Which food type will your species like? Choose from:')
                             for name in FoodType.__members__:
                                 print(name)
                             while True:
@@ -106,7 +106,7 @@ class Service():
                 service.getAllActive()
 
             # Handle different types
-            if isinstance(keytype, Enum):
+            if type(keytype).__name__ == "Enum":
                 if keyname == 'landscape':
                     print('Which landscape will your exhibit have? Choose from:')
                     print('\n'.join(Landscape.__members__))
@@ -117,10 +117,20 @@ class Service():
                             break
                         else:
                             print("Invalid choice, try again.")
+                elif keyname == 'food_type':
+                    print('Which food type will your species like? Choose from:')
+                    print('\n'.join(FoodType.__members__))
+                    while True:
+                        testinput = input(f'{keyname}: ').strip().upper()
+                        if testinput in FoodType.__members__:
+                            inputval = testinput
+                            break
+                        else:
+                            print("Invalid choice, try again.")
                 else:
                     print(f"Unsupported Enum type for field {keyname}.")
                     continue
-            elif isinstance(keytype, Boolean):
+            elif type(keytype).__name__ == "Boolean":
                 inputval = self.getBooleanFromInput()
             else:
                 inputval = self.verifyInput(keytype, keyname)
@@ -143,14 +153,6 @@ class Service():
                 return False
             else:
                 print("Invalid input. Please enter 1 for yes or 0 for no.")
-
-    # def verifyInput(self, keytype, keyname):
-    #     while True:
-    #         try:
-    #             userinput = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
-    #             return userinput
-    #         except (ValueError, TypeError) as e:
-    #             print(f"Invalid input. Error: {e}. Please try again.")
 
     def verifyInput(self, keytype, keyname):
         """

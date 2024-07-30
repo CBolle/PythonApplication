@@ -29,12 +29,12 @@ class FoodService(Service):
 
     def updateById(self):
         print("Please choose from the list below.")
-        print(self.getAllActive())
+        self.getAllActive()
         args, id = self.getUpdatedict(Food)
         self.repo.updateById(args, id)
 
     def deleteById(self):
         print("Please choose from the list below.")
-        print(self.getAllActive())
+        self.getAllActive()
         food_id = int(input('I choose to delete the food with id: '))
         self.repo.deleteById(food_id)

@@ -1,6 +1,6 @@
 from sqlalchemy.types import String, Integer, Float, Enum, Date, Boolean
 from sqlalchemy.inspection import inspect
-from datetime import date
+from datetime import date, datetime
 from enum import Enum
 from src.models.landscape import Landscape
 
@@ -107,10 +107,36 @@ class Service():
             else:
                 print("Invalid input. Please enter 1 for yes or 0 for no.")
 
+    # def verifyInput(self, keytype, keyname):
+    #     while True:
+    #         try:
+    #             userinput = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
+    #             return userinput
+    #         except (ValueError, TypeError) as e:
+    #             print(f"Invalid input. Error: {e}. Please try again.")
+
     def verifyInput(self, keytype, keyname):
+        """
+        Verifies and returns the user input based on the type of field.
+        Handles different types like string, integer, float, date, and boolean.
+        """
         while True:
-            try: 
-                userinput = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
-                return userinput
+            try:
+                # Handling for SQLAlchemy Date type
+                if isinstance(keytype, Date):
+                    date_str = input(f'{keyname} (format YYYY-MM-DD): ').strip()
+                    inputval = datetime.strptime(date_str, '%Y-%m-%d').date()
+                # Handling for SQLAlchemy Enum type
+                elif isinstance(keytype, Enum):
+                    print(f'Valid options for {keyname}: {", ".join([e.name for e in keytype.enum_class])}')
+                    enum_input = input(f'{keyname}: ').strip()
+                    if enum_input in [e.name for e in keytype.enum_class]:
+                        inputval = keytype.enum_class[enum_input]
+                    else:
+                        raise ValueError("Invalid enum value")
+                else:
+                    # General handling for other types
+                    inputval = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
+                return inputval
             except (ValueError, TypeError) as e:
                 print(f"Invalid input. Error: {e}. Please try again.")

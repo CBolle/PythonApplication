@@ -20,9 +20,10 @@ class AnimalService(Service):
     def add(self):
         self.args = self.getInputdict(Animal)
         animal = Animal(**self.args)
+        print(animal.toDict())
         try:
             self.repo.add(animal)
-            print(f'The following animal was added to the database:\n{json.dumps(self.args, indent = 4)}')
+            print(f'The following animal was added to the database:\n{animal.toDict()}')
         except:
             print("Something went wrong when you wanted to add the animal to the database.")
 

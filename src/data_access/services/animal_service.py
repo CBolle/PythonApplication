@@ -1,6 +1,5 @@
 from src.data_access.repositories.animal_repo import AnimalRepository
 from src.models.animal import Animal
-from src.models.landscape import Landscape
 from src.data_access.database import database
 from src.data_access.services.service import Service
 from sqlalchemy.inspection import inspect
@@ -13,28 +12,29 @@ class AnimalService(Service):
 
     def getAllActive(self):
         all_animals = self.repo.getAllActive()
-        print("Species currently in your zoo:")
+        print("Animal currently in your zoo:")
         for animal in all_animals:
-            print(json.dumps(animal.toDict()))
-
+            # print(json.dumps(animal.toDict()))
+            print(animal.toDict())
 
     def add(self):
-        self.args = self.getinputdict(Animal)
+        self.args = self.getInputdict(Animal)
         animal = Animal(**self.args)
+        print(animal.toDict())
         try:
             self.repo.add(animal)
-            print(f'The following animal was added to the database:\n{json.dumps(self.args, indent = 4)}')
+            print(f'The following animal was added to the database:\n{animal.toDict()}')
         except:
             print("Something went wrong when you wanted to add the animal to the database.")
 
     def updateById(self):
-        species = input("Which animal would you like to update? Please choose from the list below.")
-        print(self.repo.get_all_active())
-        self.getupdatedict(Animal)
+        print("Please choose from the list below.")
+        print(self.getAllActive())
+        args, id = self.getUpdatedict(Animal)
+        self.repo.updateById(args, id)
 
-
-    def delete(self):
-        name = input("Which animal would you like to delete? Please choose from the list below.")
-        print(self.repo.get_all_active)
+    def deleteById(self):
+        print("Please choose from the list below.")
+        print(self.getAllActive())
         animal_id = int(input('I choose to delete the animal with id: '))
-        self.repo.delete(animal_id)
+        self.repo.deleteById(animal_id)

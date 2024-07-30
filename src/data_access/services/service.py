@@ -1,6 +1,6 @@
 from sqlalchemy.types import String, Integer, Float, Enum, Date, Boolean
 from sqlalchemy.inspection import inspect
-from datetime import date
+from datetime import date, datetime
 from enum import Enum
 from src.models.landscape import Landscape
 
@@ -43,7 +43,7 @@ class Service():
                                     print("Invalid choice, try again.")
                         # add other enum classes in if-statements if necessary
                     else:
-                        inputval = self.typedict[type_i](input(f'{keyname}: '))
+                        inputval = self.verifyInput(keytype, keyname)
                     
             args[keyname] = inputval
         return args
@@ -87,14 +87,13 @@ class Service():
                     print(f"Unsupported Enum type for field {keyname}.")
                     continue
             elif type(keytype).__name__ == "Boolean":
-                inputval = self.get_boolean_from_input()
+                inputval = self.getBooleanFromInput()
             else:
-                inputval = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
-
+                inputval = self.verifyInput(keytype, keyname)
             args[keyname] = inputval
         return args, id
 
-    def get_boolean_from_input(self):
+    def getBooleanFromInput(self):
         """
         Prompts the user to input 1 or 0 to set the boolean value. Converts 1 to True and 0 to False.
         """
@@ -108,5 +107,36 @@ class Service():
             else:
                 print("Invalid input. Please enter 1 for yes or 0 for no.")
 
-    def verify_number(self):
-        pass
+    # def verifyInput(self, keytype, keyname):
+    #     while True:
+    #         try:
+    #             userinput = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
+    #             return userinput
+    #         except (ValueError, TypeError) as e:
+    #             print(f"Invalid input. Error: {e}. Please try again.")
+
+    def verifyInput(self, keytype, keyname):
+        """
+        Verifies and returns the user input based on the type of field.
+        Handles different types like string, integer, float, date, and boolean.
+        """
+        while True:
+            try:
+                # Handling for SQLAlchemy Date type
+                if isinstance(keytype, Date):
+                    date_str = input(f'{keyname} (format YYYY-MM-DD): ').strip()
+                    inputval = datetime.strptime(date_str, '%Y-%m-%d').date()
+                # Handling for SQLAlchemy Enum type
+                elif isinstance(keytype, Enum):
+                    print(f'Valid options for {keyname}: {", ".join([e.name for e in keytype.enum_class])}')
+                    enum_input = input(f'{keyname}: ').strip()
+                    if enum_input in [e.name for e in keytype.enum_class]:
+                        inputval = keytype.enum_class[enum_input]
+                    else:
+                        raise ValueError("Invalid enum value")
+                else:
+                    # General handling for other types
+                    inputval = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
+                return inputval
+            except (ValueError, TypeError) as e:
+                print(f"Invalid input. Error: {e}. Please try again.")

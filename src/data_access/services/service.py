@@ -19,16 +19,23 @@ class Service():
 
     def getInputdict(self, Class):
         args = {}
-        keylist = [[column.name,column.type] for column in inspect(Class).c]
+        keylist = [[column.name, column.type, bool(column.foreign_keys)] for column in inspect(Class).c]
         for i in range(len(keylist)):
             keyname = keylist[i][0]
             keytype = keylist[i][1]
+            isforeignkey = keylist[i][2]
 
             if keyname in ["id", "active"]:  # Skip fields that do not require input
                 continue
              
             for type_i in self.typedict.keys(): #Add types to dictionairies.py if your type is not found
                 if isinstance(keytype, type_i):
+                    if isforeignkey:
+                        from src.data_access.services.servicedict import Servicedict
+                        servicedict = Servicedict().servicedict()
+                        service = servicedict[keyname[:-3]] #removes _id from the name
+                        service.getAllActive()
+
                     if type(keytype).__name__ == "Enum":
                         if keyname == 'landscape':
                             print('Which landscape will your exhibit have? Choose from:')
@@ -50,13 +57,16 @@ class Service():
     
     def getUpdatedict(self, Class):
         args = {}
-        keylist = {column.name: column.type for column in inspect(Class).c}
+        # Collect key information as a list of lists: [name, type, is_foreign_key]
+        keylist = [[column.name, column.type, bool(column.foreign_keys)] for column in inspect(Class).c]
+        
+        # Prompt for the ID to update
         id = int(input("Which id do you want to update?: "))
 
         while True:
             # Display available fields to update, excluding 'id' and 'active'
             print("Available fields to update:")
-            available_fields = [keyname for keyname in keylist if keyname not in ["id"]]
+            available_fields = [keyname for keyname, _, _ in keylist if keyname not in ["id"]]
             if not available_fields:
                 print("No fields available to update.")
                 break
@@ -67,12 +77,24 @@ class Service():
             if keyname == 'done':
                 break
             
-            if keyname not in keylist or keyname in ["id"]:
+            # Find the key information from keylist
+            key_info = next((item for item in keylist if item[0] == keyname), None)
+            if not key_info:
                 print("Invalid field name or field cannot be updated. Please try again.")
                 continue
             
-            keytype = keylist[keyname]
-            if type(keytype).__name__ == "Enum":
+            keytype = key_info[1]
+            isforeignkey = key_info[2]
+
+            # Handle foreign key fields
+            if isforeignkey:
+                from src.data_access.services.servicedict import Servicedict
+                servicedict = Servicedict().servicedict()
+                service = servicedict.get(keyname[:-3])  # Removes _id from the name
+                service.getAllActive()
+
+            # Handle different types
+            if isinstance(keytype, Enum):
                 if keyname == 'landscape':
                     print('Which landscape will your exhibit have? Choose from:')
                     print('\n'.join(Landscape.__members__))
@@ -86,12 +108,15 @@ class Service():
                 else:
                     print(f"Unsupported Enum type for field {keyname}.")
                     continue
-            elif type(keytype).__name__ == "Boolean":
+            elif isinstance(keytype, Boolean):
                 inputval = self.getBooleanFromInput()
             else:
                 inputval = self.verifyInput(keytype, keyname)
+            
             args[keyname] = inputval
+        
         return args, id
+
 
     def getBooleanFromInput(self):
         """
@@ -140,3 +165,4 @@ class Service():
                 return inputval
             except (ValueError, TypeError) as e:
                 print(f"Invalid input. Error: {e}. Please try again.")
+

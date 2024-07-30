@@ -12,9 +12,8 @@ class AnimalService(Service):
 
     def getAllActive(self):
         all_animals = self.repo.getAllActive()
-        print("Animal currently in your zoo:")
+        print("Animals currently in your zoo:")
         for animal in all_animals:
-            # print(json.dumps(animal.toDict()))
             print(animal.toDict())
 
     def add(self):
@@ -29,12 +28,12 @@ class AnimalService(Service):
 
     def updateById(self):
         print("Please choose from the list below.")
-        print(self.getAllActive())
+        self.getAllActive()
         args, id = self.getUpdatedict(Animal)
         self.repo.updateById(args, id)
 
     def deleteById(self):
         print("Please choose from the list below.")
-        print(self.getAllActive())
+        self.getAllActive()
         animal_id = int(input('I choose to delete the animal with id: '))
         self.repo.deleteById(animal_id)

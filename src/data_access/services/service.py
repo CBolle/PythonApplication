@@ -43,7 +43,7 @@ class Service():
                                     print("Invalid choice, try again.")
                         # add other enum classes in if-statements if necessary
                     else:
-                        inputval = self.typedict[type_i](input(f'{keyname}: '))
+                        inputval = self.verifyInput(keytype, keyname)
                     
             args[keyname] = inputval
         return args
@@ -87,14 +87,13 @@ class Service():
                     print(f"Unsupported Enum type for field {keyname}.")
                     continue
             elif type(keytype).__name__ == "Boolean":
-                inputval = self.get_boolean_from_input()
+                inputval = self.getBooleanFromInput()
             else:
-                inputval = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
-
+                inputval = self.verifyInput(keytype, keyname)
             args[keyname] = inputval
         return args, id
 
-    def get_boolean_from_input(self):
+    def getBooleanFromInput(self):
         """
         Prompts the user to input 1 or 0 to set the boolean value. Converts 1 to True and 0 to False.
         """
@@ -108,5 +107,10 @@ class Service():
             else:
                 print("Invalid input. Please enter 1 for yes or 0 for no.")
 
-    def verify_number(self):
-        pass
+    def verifyInput(self, keytype, keyname):
+        while True:
+            try: 
+                userinput = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
+                return userinput
+            except (ValueError, TypeError) as e:
+                print(f"Invalid input. Error: {e}. Please try again.")

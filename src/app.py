@@ -2,6 +2,7 @@ from src.views.view import View
 from src.data_access.services.animal_service import AnimalService
 from src.data_access.services.species_service import SpeciesService
 from src.data_access.services.exhibit_service import ExhibitService
+from src.data_access.services.servicedict import Servicedict
 from src.data_access.database import database
 
 class App():
@@ -40,7 +41,7 @@ class App():
 
     def runCrudMenu(self, menu_type):
         while True:
-            services = {"animal": AnimalService(), "species": SpeciesService(), "exhibit": ExhibitService()}
+            services = Servicedict().servicedict()
             try:
                 service = services[menu_type] 
                 self.view.displayCrudMenu(menu_type)  

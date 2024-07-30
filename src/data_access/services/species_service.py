@@ -29,7 +29,7 @@ class SpeciesService(Service):
 
     def updateById(self):
         print("Please choose from the list below.")
-        print(self.getAllActive())
+        self.getAllActive()
         args, id = self.getUpdatedict(Species)
         self.repo.updateById(args, id)
 

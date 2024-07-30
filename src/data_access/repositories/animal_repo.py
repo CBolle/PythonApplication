@@ -18,14 +18,14 @@ class AnimalRepository:
     def getById(self, animal_id):
         return self.db_session.get(Animal, animal_id)
     
-    def update(self, animal_id, **kwargs):
-        animal = self.get_by_id(animal_id)
-        for key, value in kwargs.items():
-            if hasattr(animal, key):
-                setattr(animal, key, value)
+    def updateById(self, args, animal_id):
+        for key, value in args.items():
+            if hasattr(self.getById(animal_id), key):
+                setattr(self.getById(animal_id), key, value)
             else:
                 print(f'Animal does not have a field {key}.')
         self.db_session.commit()
     
-    def delete(self, species_id):
-        self.db_session.get(Animal, species_id).active = False
+    def deleteById(self, animal_id):
+        self.getById(animal_id).active = False
+        self.db_session.commit()

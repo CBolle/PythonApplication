@@ -5,7 +5,7 @@ from src.models.animal import Animal
 from src.models.species import Species
 from src.models.exhibit import Exhibit
 from src.models.food import Food
-from src.models.food_type import FoodType
+from models.foodtype import FoodType
 from src.models.landscape import Landscape
 
 class Database:

@@ -1,14 +1,12 @@
-from sqlalchemy.types import String, Integer, Float, Enum, Date, Boolean
+from sqlalchemy.types import String, Integer, Float, Date, Boolean, Enum as SQLEnum
 from sqlalchemy.inspection import inspect
 from datetime import date, datetime
-from enum import Enum
-from src.models.landscape import Landscape
-from src.models.food_type import FoodType
-
+from models.enumdict import Enumdict
+from models.foodtype import FoodType
 
 class Service():
     def __init__(self):
-        self.types = [String, Integer, Float, Enum, Date, Boolean]
+        self.types = [String, Integer, Float, SQLEnum, Date, Boolean]
         self.pythontypes = [str, int, float, str, date, bool]
         self.typedict = self.fillTypedict()
 
@@ -29,40 +27,15 @@ class Service():
             if keyname in ["id", "active"]:  # Skip fields that do not require input
                 continue
              
-            for type_i in self.typedict.keys(): #Add types to dictionairies.py if your type is not found
+            for type_i in self.typedict.keys(): # Add types to dictionaries.py if your type is not found
                 if isinstance(keytype, type_i):
                     if isforeignkey:
                         from src.data_access.services.servicedict import Servicedict
                         servicedict = Servicedict().servicedict()
-                        service = servicedict[keyname[:-3]] #removes _id from the name
+                        service = servicedict[keyname[:-3]] # Removes _id from the name
                         service.getAllActive()
-
-                    if type(keytype).__name__ == "Enum":
-                        if keyname == 'landscape':
-                            print('Which landscape will your exhibit have? Choose from:')
-                            for name in Landscape.__members__:
-                                print(name)
-                            while True:
-                                testinput = self.typedict[type_i](input(f'{keyname}: ')).upper()
-                                if testinput in Landscape.__members__:
-                                    inputval = testinput
-                                    break
-                                else:
-                                    print("Invalid choice, try again.")
-                        if keyname == 'food_type':
-                            print('Which food type will your species like? Choose from:')
-                            for name in FoodType.__members__:
-                                print(name)
-                            while True:
-                                testinput = self.typedict[type_i](input(f'{keyname}: ')).upper()
-                                if testinput in FoodType.__members__:
-                                    inputval = testinput
-                                    break
-                                else:
-                                    print("Invalid choice, try again.")
-                        # add other enum classes in if-statements if necessary
-                    else:
-                        inputval = self.verifyInput(keytype, keyname)
+                    
+                    inputval = self.verifyInput(keytype, keyname)
                     
             args[keyname] = inputval
         return args
@@ -106,7 +79,7 @@ class Service():
                 service.getAllActive()
 
             # Handle different types
-            if type(keytype).__name__ == "Enum":
+            if isinstance(keytype, Enum):
                 if keyname == 'landscape':
                     print('Which landscape will your exhibit have? Choose from:')
                     print('\n'.join(Landscape.__members__))
@@ -130,23 +103,19 @@ class Service():
                 else:
                     print(f"Unsupported Enum type for field {keyname}.")
                     continue
-            elif type(keytype).__name__ == "Boolean":
+            elif isinstance(keytype, Boolean):
                 inputval = self.getBooleanFromInput()
             else:
                 inputval = self.verifyInput(keytype, keyname)
             
             args[keyname] = inputval
+            print(args)
         
         return args, id
 
-
     def getBooleanFromInput(self):
-        """
-        Prompts the user to input 1 or 0 to set the boolean value. Converts 1 to True and 0 to False.
-        """
         while True:
             user_input = input("Should this item be active (yes=1/no=0): ")
-            
             if user_input == '1':
                 return True
             elif user_input == '0':
@@ -155,28 +124,36 @@ class Service():
                 print("Invalid input. Please enter 1 for yes or 0 for no.")
 
     def verifyInput(self, keytype, keyname):
-        """
-        Verifies and returns the user input based on the type of field.
-        Handles different types like string, integer, float, date, and boolean.
-        """
+        print(f'keyname: {keyname}')
+        print(f'keytype: {keytype}')
+        pythontype = type(keytype)
+        print(f'pythontype: {type(keytype)}')
+
         while True:
             try:
                 # Handling for SQLAlchemy Date type
-                if isinstance(keytype, Date):
+                if isinstance(pythontype, Date): #isinstance(DATE, Date)
                     date_str = input(f'{keyname} (format YYYY-MM-DD): ').strip()
                     inputval = datetime.strptime(date_str, '%Y-%m-%d').date()
-                # Handling for SQLAlchemy Enum type
-                elif isinstance(keytype, Enum):
-                    print(f'Valid options for {keyname}: {", ".join([e.name for e in keytype.enum_class])}')
-                    enum_input = input(f'{keyname}: ').strip()
-                    if enum_input in [e.name for e in keytype.enum_class]:
-                        inputval = keytype.enum_class[enum_input]
+                elif pythontype == SQLEnum:
+                    if keyname in Enumdict().enumdict():
+                        print(f'Which {keyname} do you want? Choose from:')
+                        Enum = Enumdict().enumdict().get(keyname)
+                        print('\n'.join(Enum.__members__))
+                        while True:
+                            inputval = str(input(f'{keyname}: ')).upper()
+                            if inputval in Enum.__members__:
+                                return inputval
+                            else:
+                                print("Invalid choice, try again.")
                     else:
-                        raise ValueError("Invalid enum value")
+                        print("This enum type is not found")
                 else:
                     # General handling for other types
                     inputval = self.typedict[type(keytype)](input(f'{keyname}: ').strip())
                 return inputval
             except (ValueError, TypeError) as e:
                 print(f"Invalid input. Error: {e}. Please try again.")
-
+        
+    def isForeignKey(self):
+        pass

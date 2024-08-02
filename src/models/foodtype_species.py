@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from src.models.base import Base
-from src.models.food_type import FoodType  # Import if needed in this context
+from models.foodtype import FoodType  # Import if needed in this context
 from src.models.landscape import Landscape  # Import if needed in this context
 
 class FoodSpecies(Base):

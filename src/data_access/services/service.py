@@ -73,7 +73,7 @@ class Service():
             from src.data_access.services.servicedict import Servicedict
             servicedict = Servicedict().servicedict()
             service = servicedict[keyname[:-3]] # Removes _id from the name
-            service.getAllActive()
+            service.getAllActive() #Prints all foreign key options before asking for the input
         while True:
             try:
                 # Handling for SQLAlchemy Date type

@@ -1,7 +1,7 @@
-from src.data_access.repositories.animal_repo import AnimalRepository
-from src.models.animal import Animal
-from src.data_access.database import database
-from src.data_access.services.service import Service
+from data_access.repositories.animal_repo import AnimalRepository
+from models.animal import Animal
+from data_access.database import database
+from data_access.services.service import Service
 from sqlalchemy.inspection import inspect
 import json
 

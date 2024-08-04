@@ -1,4 +1,4 @@
-from src.models.exhibit import Exhibit
+from models.exhibit import Exhibit
 import json
 
 class ExhibitRepository:

@@ -1,9 +1,9 @@
-from src.views.view import View
-from src.data_access.services.animal_service import AnimalService
-from src.data_access.services.species_service import SpeciesService
-from src.data_access.services.exhibit_service import ExhibitService
-from src.data_access.services.servicedict import Servicedict
-from src.data_access.database import database
+from views.view import View
+from data_access.services.animal_service import AnimalService
+from data_access.services.species_service import SpeciesService
+from data_access.services.exhibit_service import ExhibitService
+from data_access.services.servicedict import Servicedict
+from data_access.database import database
 
 class App():
     view = View()

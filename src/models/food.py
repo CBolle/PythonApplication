@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date, Boolean, inspect, Enum, Float
 from sqlalchemy.orm import relationship, sessionmaker
-from src.models.base import Base
+from models.base import Base
 from models.foodtype import FoodType
 
 class Food(Base):

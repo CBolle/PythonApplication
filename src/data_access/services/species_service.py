@@ -1,8 +1,8 @@
-from src.data_access.repositories.species_repo import SpeciesRepository
-from src.models.species import Species
-from src.models.landscape import Landscape
-from src.data_access.database import database
-from src.data_access.services.service import Service
+from data_access.repositories.species_repo import SpeciesRepository
+from models.species import Species
+from models.landscape import Landscape
+from data_access.database import database
+from data_access.services.service import Service
 from sqlalchemy.inspection import inspect
 import json
 

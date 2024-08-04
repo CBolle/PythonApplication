@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Enum, Float, Boolean, inspect
 from sqlalchemy.orm import relationship
-from src.models.base import Base
-from src.models.landscape import Landscape
+from models.base import Base
+from models.landscape import Landscape
 
 class Species(Base):
     options = []

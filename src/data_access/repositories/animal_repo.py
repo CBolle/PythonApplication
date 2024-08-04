@@ -1,4 +1,4 @@
-from src.models.animal import Animal
+from models.animal import Animal
 import json
 
 class AnimalRepository:

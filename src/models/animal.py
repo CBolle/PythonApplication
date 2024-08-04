@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, Date, Boolean, inspect
 from sqlalchemy.orm import relationship, sessionmaker
-from src.models.base import Base
+from models.base import Base
 
 class Animal(Base):
     __tablename__ = 'animal'

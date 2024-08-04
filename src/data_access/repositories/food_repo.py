@@ -1,4 +1,4 @@
-from src.models.food import Food
+from models.food import Food
 import json
 
 class FoodRepository:

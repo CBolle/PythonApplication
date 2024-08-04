@@ -1,4 +1,4 @@
-from src.models.species import Species
+from models.species import Species
 import json
 
 class SpeciesRepository:

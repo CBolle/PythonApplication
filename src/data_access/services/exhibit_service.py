@@ -1,8 +1,8 @@
-from src.data_access.repositories.exhibit_repo import ExhibitRepository
-from src.models.exhibit import Exhibit
+from data_access.repositories.exhibit_repo import ExhibitRepository
+from models.exhibit import Exhibit
 
-from src.data_access.database import database
-from src.data_access.services.service import Service
+from data_access.database import database
+from data_access.services.service import Service
 
 class ExhibitService(Service):
     def __init__(self):

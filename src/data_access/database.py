@@ -1,12 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from src.models.base import Base
-from src.models.animal import Animal
-from src.models.species import Species
-from src.models.exhibit import Exhibit
-from src.models.food import Food
+from models.base import Base
+from models.animal import Animal
+from models.species import Species
+from models.exhibit import Exhibit
+from models.food import Food
 from models.foodtype import FoodType
-from src.models.landscape import Landscape
+from models.landscape import Landscape
 
 class Database:
     DATABASE_URL = "mysql+pymysql://root:@localhost/zoo"

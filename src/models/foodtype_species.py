@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
-from src.models.base import Base
+from models.base import Base
 from models.foodtype import FoodType  # Import if needed in this context
-from src.models.landscape import Landscape  # Import if needed in this context
+from models.landscape import Landscape  # Import if needed in this context
 
 class FoodSpecies(Base):
     __tablename__ = 'food_species'

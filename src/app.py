@@ -47,7 +47,7 @@ class App():
                 self.view.displayCrudMenu(menu_type)  
                 choice = input("What action would you like to perform?: ")
             except:
-                print("This service is not yet available.")
+                print("This service is not yet available, but will be in the near future.")
                 break
             else:
                 if choice == '1':
